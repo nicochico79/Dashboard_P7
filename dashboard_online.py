@@ -59,12 +59,12 @@ def main():
 
     @st.cache(allow_output_mutation=True)
     def data_processed(): 
-    data_clean = pd.read_csv('./data/data_clean.csv', nrows=n_rows, index_col=0)
-    data_clean = data_clean.drop(['TARGET',
+        data_clean = pd.read_csv('./data/data_clean.csv', nrows=n_rows, index_col=0)
+        data_clean = data_clean.drop(['TARGET',
                              'AMT_CREDIT','REGION_RATING_CLIENT',
                               'OBS_60_CNT_SOCIAL_CIRCLE','DAYS_EMPLOYED']
                              , axis=1)
-    return data_clean
+        return data_clean
 
     data_load_state = st.text('Loading data...')
 
