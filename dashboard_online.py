@@ -85,8 +85,8 @@ def main():
                              'AMT_GOODS_PRICE': 'GOODS VALUE', 'CNT_CHILDREN': 'NUMBER CHILDREN'})
 
     # 1.4 Chargement du modèle LGBM pré-entraîné
-    with open('./data/model.pickle', 'rb') as file : 
-	model = pickle.load(file)
+    with open('./data/model.pickle', 'rb') as file :
+        model = pickle.load(file)
 
 
     # 1.5 Dataframe Voisins (afin de positionner client par rapport à groupe de clients similaires selon 10 critères communs)
