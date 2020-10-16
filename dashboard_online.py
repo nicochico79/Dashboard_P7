@@ -19,47 +19,57 @@ def main():
     # On commence par réduire la taille des dataframes
     n_rows = 500
     
-    data_load_state = st.text('Loading data...')    
+       
 
     # 1.1 Données informations générales client
 
     @st.cache(allow_output_mutation=True)
-    data_test = pd.read_csv('./data/data_test_clean.csv', nrows=n_rows, index_col='SK_ID_CURR')
+    def infos_gals(): 
+        data_test = pd.read_csv('./data/data_test_clean.csv', nrows=n_rows, index_col='SK_ID_CURR')
 
-    cols_keep = ['CODE_GENDER', 'AMT_INCOME_TOTAL', 'AMT_CREDIT',
+        cols_keep = ['CODE_GENDER', 'AMT_INCOME_TOTAL', 'AMT_CREDIT',
              'AMT_ANNUITY', 'AMT_GOODS_PRICE', 
              'NAME_EDUCATION_TYPE', 'NAME_FAMILY_STATUS',
              'DAYS_BIRTH', 'DAYS_EMPLOYED', 'OCCUPATION_TYPE',
              'CNT_FAM_MEMBERS','CNT_CHILDREN', 'FLAG_OWN_REALTY',
              'NAME_INCOME_TYPE']
-    df_desc = data_test[cols_keep]
+        df_desc = data_test[cols_keep]
 
-    df_desc['AGE'] = (df_desc['DAYS_BIRTH']/-365).astype(int)
-    df_desc['YEARS EMPLOYED'] = round((df_desc['DAYS_EMPLOYED']/-365), 0)
-    df_desc.drop(['DAYS_BIRTH', 'DAYS_EMPLOYED'], axis=1, inplace=True)
+        df_desc['AGE'] = (df_desc['DAYS_BIRTH']/-365).astype(int)
+        df_desc['YEARS EMPLOYED'] = round((df_desc['DAYS_EMPLOYED']/-365), 0)
+        df_desc.drop(['DAYS_BIRTH', 'DAYS_EMPLOYED'], axis=1, inplace=True)
 
-    df_desc = df_desc[[ 'AGE', 'CODE_GENDER',
+        df_desc = df_desc[[ 'AGE', 'CODE_GENDER',
                     'NAME_FAMILY_STATUS', 'CNT_FAM_MEMBERS', 'CNT_CHILDREN',
                     'FLAG_OWN_REALTY', 'NAME_EDUCATION_TYPE',
                     'NAME_INCOME_TYPE', 'OCCUPATION_TYPE','YEARS EMPLOYED',
                     'AMT_INCOME_TOTAL', 'AMT_CREDIT',
                     'AMT_ANNUITY', 'AMT_GOODS_PRICE']]
 
-    df_desc.columns = ['AGE', 'GENDER',
+        df_desc.columns = ['AGE', 'GENDER',
                     'FAMILY STATUS', 'FAMILY MEMBERS', 'NUMBER CHILDREN',
                     'FLAT OWNER', 'EDUCATION TYPE', 'SOURCE OF INCOME',
                     'OCCUPATION TYPE','YEARS EMPLOYED',
                     'ANNUAL INCOME', 'AMOUNT CREDIT',
                     'AMOUNT ANNUITY', 'GOODS VALUE']
+        return df_desc
+        
 
     # 1.2 Données prétraitées
 
+    @st.cache(allow_output_mutation=True)
+    def data_processed(): 
     data_clean = pd.read_csv('./data/data_clean.csv', nrows=n_rows, index_col=0)
     data_clean = data_clean.drop(['TARGET',
                              'AMT_CREDIT','REGION_RATING_CLIENT',
                               'OBS_60_CNT_SOCIAL_CIRCLE','DAYS_EMPLOYED']
                              , axis=1)
+    return data_clean
 
+    data_load_state = st.text('Loading data...')
+
+    df_desc = infos_gal()
+    data_clean = data_processed()
 
     # 1.3 Données moyennes clients défault vs payeurs
 
