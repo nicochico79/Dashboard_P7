@@ -64,7 +64,7 @@ def main():
 
     data_load_state = st.text('Loading data...')
 
-    df_desc = infos_gal()
+    df_desc = infos_gals()
     data_clean = data_processed()
 
     # 1.3 Données moyennes clients défault vs payeurs
