@@ -21,7 +21,7 @@ def main():
 
     @st.cache(allow_output_mutation=True)
     def infos_gals(): 
-        data_test = pd.read_csv('./data/data_test_clean.csv', nrows=n_rows, index_col='SK_ID_CURR')
+        data_test = pd.read_csv('./Data/data_test_clean.csv', nrows=n_rows, index_col='SK_ID_CURR')
 
         cols_keep = ['CODE_GENDER', 'AMT_INCOME_TOTAL', 'AMT_CREDIT',
              'AMT_ANNUITY', 'AMT_GOODS_PRICE', 
@@ -55,7 +55,7 @@ def main():
 
     @st.cache(allow_output_mutation=True)
     def data_processed(): 
-        data_clean = pd.read_csv('./data/data_clean.csv', nrows=n_rows, index_col=0)
+        data_clean = pd.read_csv('./Data/data_clean.csv', nrows=n_rows, index_col=0)
         data_clean = data_clean.drop(['TARGET',
                              'AMT_CREDIT','REGION_RATING_CLIENT',
                               'OBS_60_CNT_SOCIAL_CIRCLE','DAYS_EMPLOYED']
@@ -69,7 +69,7 @@ def main():
 
     # 1.3 Données moyennes clients défault vs payeurs
 
-    averages = pd.read_csv('./data/moyennes.csv')
+    averages = pd.read_csv('./Data/moyennes.csv')
     averages['AGE'] = (averages['DAYS_BIRTH']/-365).astype(int)
     averages['YEARS EMPLOYED'] = round((averages['DAYS_EMPLOYED']/-365), 0)
     averages.drop(['DAYS_BIRTH', 'DAYS_EMPLOYED'], axis=1, inplace=True)
@@ -81,7 +81,7 @@ def main():
                              'AMT_GOODS_PRICE': 'GOODS VALUE', 'CNT_CHILDREN': 'NUMBER CHILDREN'})
 
     # 1.4 Chargement du modèle LGBM pré-entraîné
-    with open('./data/model.pickle', 'rb') as file :
+    with open('./Data/model.pickle', 'rb') as file :
         model = pickle.load(file)
 
 
