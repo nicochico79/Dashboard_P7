@@ -253,9 +253,9 @@ def main():
 
     data_client_select = data_client_select.rename(columns={'AMT_ANNUITY': 'AMOUNT ANNUITY'})
 
-    mean_vois = mean_vois.rename(columns={'AMT_ANNUITY': 'AMOUNT ANNUITY'})
+    mean_voisins = mean_voisins.rename(columns={'AMT_ANNUITY': 'AMOUNT ANNUITY'})
 
-    dfcomp = pd.concat([averages, mean_vois, data_client_select], join = 'inner').round(2)
+    dfcomp = pd.concat([averages, mean_voisins, data_client_select], join = 'inner').round(2)
 
     if st.sidebar.checkbox("Afficher Détails Modèle", False, key = 0):
         st.header('3. Explication origine probabilité défaut')
